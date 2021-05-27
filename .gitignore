@@ -1,0 +1,698 @@
+.DS_Store
+scalar_pickle
+scalar_pickle_comp
+.vscode/settings.json
+__pycache__/audio_buffer.cpython-38.pyc
+__pycache__/compressor.cpython-38.pyc
+__pycache__/cost_function.cpython-38.pyc
+__pycache__/features.cpython-38.pyc
+__pycache__/global_vars.cpython-38.pyc
+__pycache__/hist_cost.cpython-38.pyc
+__pycache__/pg_model.cpython-38.pyc
+__pycache__/pg.cpython-38.pyc
+__pycache__/ring_buffer.cpython-38.pyc
+__pycache__/utils.cpython-38.pyc
+Logs/*
+tb_logs/*
+Logs/Thu May 27 11_43_20/Parameters_PG
+Logs/Thu May 27 11_44_42/.DS_Store
+Logs/Thu May 27 11_44_42/Loss Reward Plot.png
+Logs/Thu May 27 11_44_42/Parameters_PG
+Logs/Thu May 27 11_44_42/Checkpoints/actor/keras_metadata.pb
+Logs/Thu May 27 11_44_42/Checkpoints/actor/saved_model.pb
+Logs/Thu May 27 11_44_42/Checkpoints/actor/variables/variables.data-00000-of-00001
+Logs/Thu May 27 11_44_42/Checkpoints/actor/variables/variables.index
+Logs/Thu May 27 11_44_42/Checkpoints/critic/keras_metadata.pb
+Logs/Thu May 27 11_44_42/Checkpoints/critic/saved_model.pb
+Logs/Thu May 27 11_44_42/Checkpoints/critic/variables/variables.data-00000-of-00001
+Logs/Thu May 27 11_44_42/Checkpoints/critic/variables/variables.index
+Logs/Thu May 27 11_44_42/Costs/epoch_1.png
+Logs/Thu May 27 11_44_42/Costs/epoch_2.png
+Logs/Thu May 27 11_44_42/Costs/epoch_3.png
+Logs/Thu May 27 11_44_42/Costs/epoch_4.png
+Logs/Thu May 27 11_44_42/Costs/epoch_5.png
+Logs/Thu May 27 11_44_42/Costs/epoch_6.png
+Logs/Thu May 27 11_44_42/Costs/epoch_7.png
+Logs/Thu May 27 11_44_42/Costs/epoch_8.png
+Logs/Thu May 27 11_44_42/Costs/epoch_9.png
+Logs/Thu May 27 11_44_42/Costs/epoch_10.png
+Logs/Thu May 27 11_44_42/Costs/epoch_11.png
+Logs/Thu May 27 11_44_42/Costs/epoch_12.png
+Logs/Thu May 27 11_44_42/Costs/epoch_13.png
+Logs/Thu May 27 11_44_42/Costs/epoch_14.png
+Logs/Thu May 27 11_44_42/Costs/epoch_15.png
+Logs/Thu May 27 11_44_42/Costs/epoch_16.png
+Logs/Thu May 27 11_44_42/Costs/epoch_17.png
+Logs/Thu May 27 11_44_42/Costs/epoch_18.png
+Logs/Thu May 27 11_44_42/Costs/epoch_19.png
+Logs/Thu May 27 11_44_42/Costs/epoch_20.png
+Logs/Thu May 27 11_44_42/Costs/epoch_21.png
+Logs/Thu May 27 11_44_42/Costs/epoch_22.png
+Logs/Thu May 27 11_44_42/Costs/epoch_23.png
+Logs/Thu May 27 11_44_42/Costs/epoch_24.png
+Logs/Thu May 27 11_44_42/Costs/epoch_25.png
+Logs/Thu May 27 11_44_42/Costs/epoch_26.png
+Logs/Thu May 27 11_44_42/Costs/epoch_27.png
+Logs/Thu May 27 11_44_42/Costs/epoch_28.png
+Logs/Thu May 27 11_44_42/Costs/epoch_29.png
+Logs/Thu May 27 11_44_42/Costs/epoch_30.png
+Logs/Thu May 27 11_44_42/Costs/epoch_31.png
+Logs/Thu May 27 11_44_42/Costs/epoch_32.png
+Logs/Thu May 27 11_44_42/Costs/epoch_33.png
+Logs/Thu May 27 11_44_42/Costs/epoch_34.png
+Logs/Thu May 27 11_44_42/Costs/epoch_35.png
+Logs/Thu May 27 11_44_42/Costs/epoch_36.png
+Logs/Thu May 27 11_44_42/Costs/epoch_37.png
+Logs/Thu May 27 11_44_42/Costs/epoch_38.png
+Logs/Thu May 27 11_44_42/Costs/epoch_39.png
+Logs/Thu May 27 11_44_42/Costs/epoch_40.png
+Logs/Thu May 27 11_44_42/Costs/epoch_41.png
+Logs/Thu May 27 11_44_42/Costs/epoch_42.png
+Logs/Thu May 27 11_44_42/Costs/epoch_43.png
+Logs/Thu May 27 11_44_42/Costs/epoch_44.png
+Logs/Thu May 27 11_44_42/Costs/epoch_45.png
+Logs/Thu May 27 11_44_42/Costs/epoch_46.png
+Logs/Thu May 27 11_44_42/Costs/epoch_47.png
+Logs/Thu May 27 11_44_42/Costs/epoch_48.png
+Logs/Thu May 27 11_44_42/Costs/epoch_49.png
+Logs/Thu May 27 11_44_42/Costs/epoch_50.png
+Logs/Thu May 27 11_44_42/Costs/epoch_51.png
+Logs/Thu May 27 11_44_42/Costs/epoch_52.png
+Logs/Thu May 27 11_44_42/Costs/epoch_53.png
+Logs/Thu May 27 11_44_42/Costs/epoch_54.png
+Logs/Thu May 27 11_44_42/Costs/epoch_55.png
+Logs/Thu May 27 11_44_42/Costs/epoch_56.png
+Logs/Thu May 27 11_44_42/Costs/epoch_57.png
+Logs/Thu May 27 11_44_42/Costs/epoch_58.png
+Logs/Thu May 27 11_44_42/Costs/epoch_59.png
+Logs/Thu May 27 11_44_42/Costs/epoch_60.png
+Logs/Thu May 27 11_44_42/Costs/epoch_61.png
+Logs/Thu May 27 11_44_42/Costs/epoch_62.png
+Logs/Thu May 27 11_44_42/Costs/epoch_63.png
+Logs/Thu May 27 11_44_42/Costs/epoch_64.png
+Logs/Thu May 27 11_44_42/Costs/epoch_65.png
+Logs/Thu May 27 11_44_42/Costs/epoch_66.png
+Logs/Thu May 27 11_44_42/Costs/epoch_67.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_0.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_1.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_2.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_3.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_4.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_5.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_6.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_7.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_8.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_9.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_10.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_11.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_12.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_13.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_14.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_15.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_16.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_17.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_18.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_19.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_20.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_21.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_22.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_23.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_24.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_25.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_26.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_27.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_28.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_29.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_30.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_31.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_32.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_33.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_34.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_35.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_36.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_37.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_38.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_39.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_40.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_41.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_42.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_43.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_44.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_45.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_46.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_47.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_48.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_49.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_50.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_51.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_52.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_53.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_54.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_55.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_56.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_57.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_58.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_59.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_60.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_61.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_62.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_63.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_64.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_65.png
+Logs/Thu May 27 11_44_42/Gain Reduction/epoch_66.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_1.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_2.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_3.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_4.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_5.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_6.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_7.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_8.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_9.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_10.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_11.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_12.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_13.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_14.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_15.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_16.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_17.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_18.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_19.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_20.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_21.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_22.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_23.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_24.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_25.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_26.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_27.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_28.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_29.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_30.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_31.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_32.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_33.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_34.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_35.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_36.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_37.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_38.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_39.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_40.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_41.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_42.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_43.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_44.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_45.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_46.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_47.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_48.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_49.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_50.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_51.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_52.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_53.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_54.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_55.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_56.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_57.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_58.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_59.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_60.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_61.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_62.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_63.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_64.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_65.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_66.png
+Logs/Thu May 27 11_44_42/Time Plots/epoch_67.png
+Logs/Thu May 27 15_50_05/.DS_Store
+Logs/Thu May 27 15_50_05/Loss Reward Plot.png
+Logs/Thu May 27 15_50_05/Parameters_PG
+Logs/Thu May 27 15_50_05/Checkpoints/actor/keras_metadata.pb
+Logs/Thu May 27 15_50_05/Checkpoints/actor/saved_model.pb
+Logs/Thu May 27 15_50_05/Checkpoints/actor/variables/variables.data-00000-of-00001
+Logs/Thu May 27 15_50_05/Checkpoints/actor/variables/variables.index
+Logs/Thu May 27 15_50_05/Checkpoints/critic/keras_metadata.pb
+Logs/Thu May 27 15_50_05/Checkpoints/critic/saved_model.pb
+Logs/Thu May 27 15_50_05/Checkpoints/critic/variables/variables.data-00000-of-00001
+Logs/Thu May 27 15_50_05/Checkpoints/critic/variables/variables.index
+Logs/Thu May 27 15_50_05/Costs/epoch_1.png
+Logs/Thu May 27 15_50_05/Costs/epoch_2.png
+Logs/Thu May 27 15_50_05/Costs/epoch_3.png
+Logs/Thu May 27 15_50_05/Costs/epoch_4.png
+Logs/Thu May 27 15_50_05/Costs/epoch_5.png
+Logs/Thu May 27 15_50_05/Costs/epoch_6.png
+Logs/Thu May 27 15_50_05/Costs/epoch_7.png
+Logs/Thu May 27 15_50_05/Costs/epoch_8.png
+Logs/Thu May 27 15_50_05/Costs/epoch_9.png
+Logs/Thu May 27 15_50_05/Costs/epoch_10.png
+Logs/Thu May 27 15_50_05/Costs/epoch_11.png
+Logs/Thu May 27 15_50_05/Costs/epoch_12.png
+Logs/Thu May 27 15_50_05/Costs/epoch_13.png
+Logs/Thu May 27 15_50_05/Costs/epoch_14.png
+Logs/Thu May 27 15_50_05/Costs/epoch_15.png
+Logs/Thu May 27 15_50_05/Costs/epoch_16.png
+Logs/Thu May 27 15_50_05/Costs/epoch_17.png
+Logs/Thu May 27 15_50_05/Costs/epoch_18.png
+Logs/Thu May 27 15_50_05/Costs/epoch_19.png
+Logs/Thu May 27 15_50_05/Costs/epoch_20.png
+Logs/Thu May 27 15_50_05/Costs/epoch_21.png
+Logs/Thu May 27 15_50_05/Costs/epoch_22.png
+Logs/Thu May 27 15_50_05/Costs/epoch_23.png
+Logs/Thu May 27 15_50_05/Costs/epoch_24.png
+Logs/Thu May 27 15_50_05/Costs/epoch_25.png
+Logs/Thu May 27 15_50_05/Costs/epoch_26.png
+Logs/Thu May 27 15_50_05/Costs/epoch_27.png
+Logs/Thu May 27 15_50_05/Costs/epoch_28.png
+Logs/Thu May 27 15_50_05/Costs/epoch_29.png
+Logs/Thu May 27 15_50_05/Costs/epoch_30.png
+Logs/Thu May 27 15_50_05/Costs/epoch_31.png
+Logs/Thu May 27 15_50_05/Costs/epoch_32.png
+Logs/Thu May 27 15_50_05/Costs/epoch_33.png
+Logs/Thu May 27 15_50_05/Costs/epoch_34.png
+Logs/Thu May 27 15_50_05/Costs/epoch_35.png
+Logs/Thu May 27 15_50_05/Costs/epoch_36.png
+Logs/Thu May 27 15_50_05/Costs/epoch_37.png
+Logs/Thu May 27 15_50_05/Costs/epoch_38.png
+Logs/Thu May 27 15_50_05/Costs/epoch_39.png
+Logs/Thu May 27 15_50_05/Costs/epoch_40.png
+Logs/Thu May 27 15_50_05/Costs/epoch_41.png
+Logs/Thu May 27 15_50_05/Costs/epoch_42.png
+Logs/Thu May 27 15_50_05/Costs/epoch_43.png
+Logs/Thu May 27 15_50_05/Costs/epoch_44.png
+Logs/Thu May 27 15_50_05/Costs/epoch_45.png
+Logs/Thu May 27 15_50_05/Costs/epoch_46.png
+Logs/Thu May 27 15_50_05/Costs/epoch_47.png
+Logs/Thu May 27 15_50_05/Costs/epoch_48.png
+Logs/Thu May 27 15_50_05/Costs/epoch_49.png
+Logs/Thu May 27 15_50_05/Costs/epoch_50.png
+Logs/Thu May 27 15_50_05/Costs/epoch_51.png
+Logs/Thu May 27 15_50_05/Costs/epoch_52.png
+Logs/Thu May 27 15_50_05/Costs/epoch_53.png
+Logs/Thu May 27 15_50_05/Costs/epoch_54.png
+Logs/Thu May 27 15_50_05/Costs/epoch_55.png
+Logs/Thu May 27 15_50_05/Costs/epoch_56.png
+Logs/Thu May 27 15_50_05/Costs/epoch_57.png
+Logs/Thu May 27 15_50_05/Costs/epoch_58.png
+Logs/Thu May 27 15_50_05/Costs/epoch_59.png
+Logs/Thu May 27 15_50_05/Costs/epoch_60.png
+Logs/Thu May 27 15_50_05/Costs/epoch_61.png
+Logs/Thu May 27 15_50_05/Costs/epoch_62.png
+Logs/Thu May 27 15_50_05/Costs/epoch_63.png
+Logs/Thu May 27 15_50_05/Costs/epoch_64.png
+Logs/Thu May 27 15_50_05/Costs/epoch_65.png
+Logs/Thu May 27 15_50_05/Costs/epoch_66.png
+Logs/Thu May 27 15_50_05/Costs/epoch_67.png
+Logs/Thu May 27 15_50_05/Costs/epoch_68.png
+Logs/Thu May 27 15_50_05/Costs/epoch_69.png
+Logs/Thu May 27 15_50_05/Costs/epoch_70.png
+Logs/Thu May 27 15_50_05/Costs/epoch_71.png
+Logs/Thu May 27 15_50_05/Costs/epoch_72.png
+Logs/Thu May 27 15_50_05/Costs/epoch_73.png
+Logs/Thu May 27 15_50_05/Costs/epoch_74.png
+Logs/Thu May 27 15_50_05/Costs/epoch_75.png
+Logs/Thu May 27 15_50_05/Costs/epoch_76.png
+Logs/Thu May 27 15_50_05/Costs/epoch_77.png
+Logs/Thu May 27 15_50_05/Costs/epoch_78.png
+Logs/Thu May 27 15_50_05/Costs/epoch_79.png
+Logs/Thu May 27 15_50_05/Costs/epoch_80.png
+Logs/Thu May 27 15_50_05/Costs/epoch_81.png
+Logs/Thu May 27 15_50_05/Costs/epoch_82.png
+Logs/Thu May 27 15_50_05/Costs/epoch_83.png
+Logs/Thu May 27 15_50_05/Costs/epoch_84.png
+Logs/Thu May 27 15_50_05/Costs/epoch_85.png
+Logs/Thu May 27 15_50_05/Costs/epoch_86.png
+Logs/Thu May 27 15_50_05/Costs/epoch_87.png
+Logs/Thu May 27 15_50_05/Costs/epoch_88.png
+Logs/Thu May 27 15_50_05/Costs/epoch_89.png
+Logs/Thu May 27 15_50_05/Costs/epoch_90.png
+Logs/Thu May 27 15_50_05/Costs/epoch_91.png
+Logs/Thu May 27 15_50_05/Costs/epoch_92.png
+Logs/Thu May 27 15_50_05/Costs/epoch_93.png
+Logs/Thu May 27 15_50_05/Costs/epoch_94.png
+Logs/Thu May 27 15_50_05/Costs/epoch_95.png
+Logs/Thu May 27 15_50_05/Costs/epoch_96.png
+Logs/Thu May 27 15_50_05/Costs/epoch_97.png
+Logs/Thu May 27 15_50_05/Costs/epoch_98.png
+Logs/Thu May 27 15_50_05/Costs/epoch_99.png
+Logs/Thu May 27 15_50_05/Costs/epoch_100.png
+Logs/Thu May 27 15_50_05/Costs/epoch_101.png
+Logs/Thu May 27 15_50_05/Costs/epoch_102.png
+Logs/Thu May 27 15_50_05/Costs/epoch_103.png
+Logs/Thu May 27 15_50_05/Costs/epoch_104.png
+Logs/Thu May 27 15_50_05/Costs/epoch_105.png
+Logs/Thu May 27 15_50_05/Costs/epoch_106.png
+Logs/Thu May 27 15_50_05/Costs/epoch_107.png
+Logs/Thu May 27 15_50_05/Costs/epoch_108.png
+Logs/Thu May 27 15_50_05/Costs/epoch_109.png
+Logs/Thu May 27 15_50_05/Costs/epoch_110.png
+Logs/Thu May 27 15_50_05/Costs/epoch_111.png
+Logs/Thu May 27 15_50_05/Costs/epoch_112.png
+Logs/Thu May 27 15_50_05/Costs/epoch_113.png
+Logs/Thu May 27 15_50_05/Costs/epoch_114.png
+Logs/Thu May 27 15_50_05/Costs/epoch_115.png
+Logs/Thu May 27 15_50_05/Costs/epoch_116.png
+Logs/Thu May 27 15_50_05/Costs/epoch_117.png
+Logs/Thu May 27 15_50_05/Costs/epoch_118.png
+Logs/Thu May 27 15_50_05/Costs/epoch_119.png
+Logs/Thu May 27 15_50_05/Costs/epoch_120.png
+Logs/Thu May 27 15_50_05/Costs/epoch_121.png
+Logs/Thu May 27 15_50_05/Costs/epoch_122.png
+Logs/Thu May 27 15_50_05/Costs/epoch_123.png
+Logs/Thu May 27 15_50_05/Costs/epoch_124.png
+Logs/Thu May 27 15_50_05/Costs/epoch_125.png
+Logs/Thu May 27 15_50_05/Costs/epoch_126.png
+Logs/Thu May 27 15_50_05/Costs/epoch_127.png
+Logs/Thu May 27 15_50_05/Costs/epoch_128.png
+Logs/Thu May 27 15_50_05/Costs/epoch_129.png
+Logs/Thu May 27 15_50_05/Costs/epoch_130.png
+Logs/Thu May 27 15_50_05/Costs/epoch_131.png
+Logs/Thu May 27 15_50_05/Costs/epoch_132.png
+Logs/Thu May 27 15_50_05/Costs/epoch_133.png
+Logs/Thu May 27 15_50_05/Costs/epoch_134.png
+Logs/Thu May 27 15_50_05/Costs/epoch_135.png
+Logs/Thu May 27 15_50_05/Costs/epoch_136.png
+Logs/Thu May 27 15_50_05/Costs/epoch_137.png
+Logs/Thu May 27 15_50_05/Costs/epoch_138.png
+Logs/Thu May 27 15_50_05/Costs/epoch_139.png
+Logs/Thu May 27 15_50_05/Costs/epoch_140.png
+Logs/Thu May 27 15_50_05/Costs/epoch_141.png
+Logs/Thu May 27 15_50_05/Costs/epoch_142.png
+Logs/Thu May 27 15_50_05/Costs/epoch_143.png
+Logs/Thu May 27 15_50_05/Costs/epoch_144.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_0.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_1.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_2.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_3.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_4.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_5.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_6.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_7.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_8.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_9.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_10.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_11.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_12.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_13.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_14.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_15.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_16.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_17.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_18.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_19.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_20.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_21.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_22.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_23.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_24.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_25.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_26.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_27.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_28.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_29.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_30.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_31.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_32.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_33.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_34.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_35.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_36.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_37.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_38.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_39.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_40.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_41.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_42.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_43.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_44.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_45.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_46.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_47.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_48.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_49.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_50.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_51.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_52.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_53.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_54.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_55.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_56.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_57.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_58.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_59.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_60.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_61.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_62.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_63.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_64.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_65.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_66.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_67.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_68.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_69.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_70.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_71.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_72.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_73.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_74.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_75.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_76.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_77.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_78.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_79.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_80.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_81.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_82.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_83.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_84.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_85.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_86.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_87.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_88.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_89.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_90.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_91.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_92.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_93.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_94.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_95.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_96.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_97.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_98.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_99.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_100.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_101.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_102.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_103.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_104.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_105.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_106.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_107.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_108.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_109.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_110.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_111.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_112.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_113.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_114.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_115.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_116.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_117.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_118.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_119.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_120.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_121.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_122.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_123.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_124.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_125.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_126.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_127.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_128.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_129.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_130.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_131.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_132.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_133.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_134.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_135.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_136.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_137.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_138.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_139.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_140.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_141.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_142.png
+Logs/Thu May 27 15_50_05/Gain Reduction/epoch_143.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_1.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_2.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_3.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_4.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_5.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_6.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_7.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_8.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_9.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_10.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_11.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_12.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_13.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_14.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_15.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_16.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_17.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_18.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_19.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_20.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_21.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_22.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_23.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_24.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_25.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_26.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_27.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_28.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_29.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_30.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_31.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_32.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_33.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_34.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_35.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_36.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_37.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_38.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_39.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_40.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_41.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_42.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_43.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_44.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_45.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_46.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_47.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_48.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_49.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_50.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_51.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_52.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_53.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_54.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_55.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_56.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_57.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_58.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_59.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_60.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_61.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_62.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_63.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_64.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_65.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_66.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_67.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_68.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_69.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_70.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_71.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_72.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_73.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_74.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_75.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_76.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_77.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_78.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_79.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_80.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_81.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_82.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_83.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_84.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_85.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_86.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_87.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_88.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_89.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_90.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_91.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_92.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_93.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_94.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_95.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_96.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_97.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_98.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_99.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_100.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_101.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_102.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_103.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_104.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_105.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_106.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_107.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_108.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_109.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_110.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_111.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_112.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_113.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_114.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_115.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_116.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_117.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_118.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_119.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_120.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_121.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_122.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_123.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_124.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_125.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_126.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_127.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_128.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_129.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_130.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_131.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_132.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_133.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_134.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_135.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_136.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_137.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_138.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_139.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_140.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_141.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_142.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_143.png
+Logs/Thu May 27 15_50_05/Time Plots/epoch_144.png
+Logs/Wed May 26 11_39_27/Parameters_PG
+tb_logs/events.out.tfevents.1621792138.Nicks-MBP.localdomain.32864.651.v2
+tb_logs/events.out.tfevents.1621792192.Nicks-MBP.localdomain.32885.651.v2
+tb_logs/events.out.tfevents.1621792417.Nicks-MBP.localdomain.32961.651.v2
+tb_logs/events.out.tfevents.1621792528.Nicks-MBP.localdomain.32993.651.v2
+tb_logs/events.out.tfevents.1621792643.Nicks-MBP.localdomain.33038.651.v2
+tb_logs/events.out.tfevents.1621792726.Nicks-MBP.localdomain.33060.651.v2
+tb_logs/events.out.tfevents.1621793117.Nicks-MBP.localdomain.33170.651.v2
+tb_logs/events.out.tfevents.1621793223.Nicks-MBP.localdomain.33213.651.v2
+tb_logs/events.out.tfevents.1621793366.Nicks-MBP.localdomain.33250.651.v2
+tb_logs/events.out.tfevents.1621793751.Nicks-MBP.localdomain.33323.651.v2
+tb_logs/events.out.tfevents.1621793845.Nicks-MBP.localdomain.33348.651.v2
+tb_logs/events.out.tfevents.1621794125.Nicks-MBP.localdomain.33426.651.v2
+tb_logs/events.out.tfevents.1621794167.Nicks-MBP.localdomain.profile-empty
+tb_logs/events.out.tfevents.1621794171.Nicks-MBP.localdomain.33426.18749.v2
+tb_logs/events.out.tfevents.1621960915.Nicks-MBP.localdomain.1179.651.v2
+tb_logs/events.out.tfevents.1621961436.Nicks-MBP.localdomain.1305.651.v2
+tb_logs/events.out.tfevents.1621961479.Nicks-MBP.localdomain.1305.29859.v2
+tb_logs/events.out.tfevents.1621961951.Nicks-MBP.localdomain.1493.651.v2
+tb_logs/events.out.tfevents.1621961992.Nicks-MBP.localdomain.1493.29859.v2
+tb_logs/events.out.tfevents.1621962736.Nicks-MBP.localdomain.1970.651.v2
+tb_logs/events.out.tfevents.1621962778.Nicks-MBP.localdomain.1970.29859.v2
+tb_logs/plugins/profile/2021-05-23_14-22-47/local.trace
+tb_logs/plugins/profile/2021-05-25_12-51-14/local.trace
+tb_logs/plugins/profile/2021-05-25_12-59-48/local.trace
+tb_logs/plugins/profile/2021-05-25_13-12-54/local.trace
