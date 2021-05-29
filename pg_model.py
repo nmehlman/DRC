@@ -231,24 +231,11 @@ def build_actor_critic(history_neurons, lookahead_neurons):
 
     return actor, critic
 
-def split_state(state, lookahead_len, history_len):
+def predict_times(history, lookahead, actor, critic):
+                
+    history = tf.expand_dims(history, 0)
+    lookahead = tf.expand_dims(lookahead, 0)
 
-    if compState:
-        state = tf.expand_dims(state, 0)
-        history = state[:,0:3]
-        lookahead = state[:, lookahead_len:]
-
-    else:
-        state = tf.expand_dims(state, 0)
-        history = state[:, 0:history_len]
-        lookahead = state[:, -lookahead_len:]
-
-    return history, lookahead
-
-def predict_times(state, actor, critic):
-        
-    history, lookahead = split_state(state)
-        
     #Actor predictions
     predictions = actor([history, lookahead])
     attack_idx = random.categorical(predictions[0], 1)[0,0]

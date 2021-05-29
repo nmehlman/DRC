@@ -47,32 +47,27 @@ class EnvelopeFinder:
         self.lookahead_buffer.reset()
         self.full = False
 
-    def update_comp(self, history_frame, lookahead_frame):
+    def update_comp(self, lookahead_frame):
 
         '''Returns envelope 'state', after adding newest frames.
         \nhistory_frame -> latest history frame
         \nlookahead_frame -> latest lookahead frame'''
             
         #Add frames
-        for i in history_frame: 
-            self.history_buffer.push(i)
         for i in lookahead_frame:
             self.lookahead_buffer.push(i)
             
-        self.full = (self.history_buffer.is_full() and self.lookahead_buffer.is_full()) #Check if buffers are full
-
+        self.full = self.history_buffer.is_full() #Check if buffers are full
         #Get envelope
-        history_env = abs(hilbert( self.history_buffer.get() ))
         lookahead_env = abs(hilbert( self.lookahead_buffer.get() ))
             
         #Resample so length matches network input
-        history_env_smoothed = resample(history_env, self.history_neurons)
         lookahead_env_smoothed = resample(lookahead_env, self.lookahead_neurons)
             
         state = np.array(lookahead_env_smoothed)
 
-        #if self.scalar: #Scale
-            #state = self.scalar.transform([state])
+        if self.scalar: #Scale
+            state = self.scalar.transform([state])
 
         return state.flatten().astype('float32'), np.array((self.full or compState), dtype='int16')
 
@@ -109,8 +104,8 @@ class EnvelopeFinder:
 
         return state.flatten().astype('float32'), np.array((self.full or compState), dtype='int16')
 
-    def update_tf(self, history_frame, lookahead_frame):
-        return tf.numpy_function(self.update, (history_frame, lookahead_frame), [tf.float32, tf.int16])
+    def update_tf(self, lookahead_frame):
+        return tf.numpy_function(self.update_comp, [lookahead_frame], [tf.float32, tf.int16])
 
 if __name__ == '__main__':
 

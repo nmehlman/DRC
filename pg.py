@@ -1,6 +1,5 @@
 import tensorflow as tf
 from global_vars import*
-import os
 from global_vars import*
 from audio_buffer import*
 from compressor import Compressor
@@ -12,7 +11,7 @@ from timer import runTimer
 from utils import directory_init, idx_to_time, cost_plot, attack_release_plot
 from sklearn.preprocessing import StandardScaler
 import pickle
-import sys
+from pg_model import predict_times
 from audio import saveAudio
 from hist_cost import get_histogram_cost
 
@@ -216,7 +215,7 @@ def make_scalar(input_file_path, pickle_path):
     scalar.fit(states)
     pickle.dump(scalar, open(pickle_path,'wb'))
 
-def run_episode_tf(model, audio, comp, feature):
+def run_episode_tf(actor, critic, audio, comp, feature):
     
     '''Runs training episode for a given input audio file.'''
 
@@ -251,17 +250,15 @@ def run_episode_tf(model, audio, comp, feature):
 
         input_frame, lookahead_frame, done = audio.next_frame_tf() #Get next frames
         done.set_shape(done_shape) #Correct shape
-        attack, release, attack_prob, release_prob, value = model.predict_tf(state) #Predict using model
+        lookahead_state, _ = feature.update_tf(lookahead_frame) #Get state via Hilbert Transform
+        comp_state = tf.squeeze(comp.get_state_tf())
+
+        attack, release, attack_prob, release_prob, value = predict_times(comp_state, lookahead_state, actor, critic) #Predict using model
         comp.set_times_tf(attack, release) #Set compressor
         
         output_frame, accuracy_cost, active = comp.process_frame_tf(input_frame, False) #Pass through compressor
         accuracy_cost.set_shape(accuracy_cost_shape) #Correct shape
         active.set_shape(active_shape) #Correct shape
-        
-        env_state, _ = feature.update_tf(output_frame, lookahead_frame) #Get state via Hilbert Transform
-
-        state = tf.concat((tf.squeeze(comp.get_state_tf()), env_state), 0)
-        state.set_shape(state_shape) #Correct shape
                     
         #Buffer Updates
         accuracy_costs = accuracy_costs.write(t, accuracy_cost)
@@ -289,7 +286,7 @@ def run_episode_tf(model, audio, comp, feature):
     return tf.boolean_mask(rewards, actives), tf.boolean_mask(values, actives), tf.boolean_mask(attack_probs, actives), tf.boolean_mask(release_probs, actives), [histogram_costs.stack(), accuracy_costs.stack(), attack_times.stack(), release_times.stack()]
 
 @tf.function
-def train_step_tf(model, audio, comp, feature, opt, gamma):
+def train_step_tf(actor, critic, audio, comp, feature, opt, gamma):
 
     '''Completes one training step for Policy Gradient model.
     \nmodel -> model to train
@@ -301,20 +298,20 @@ def train_step_tf(model, audio, comp, feature, opt, gamma):
     #Run episode and find losses
     with tf.GradientTape() as ActorTape, tf.GradientTape() as CriticTape:
 
-        ActorTape.watch(model.actor.trainable_variables)
-        CriticTape.watch(model.critic.trainable_variables)
+        ActorTape.watch(actor.trainable_variables)
+        CriticTape.watch(critic.trainable_variables)
         
-        rewards, values, attack_probs, release_probs, plot_data = run_episode_tf(model, audio, comp, feature)
+        rewards, values, attack_probs, release_probs, plot_data = run_episode_tf(actor, critic, audio, comp, feature)
         returns = expected_returns(rewards, gamma)
         actor_loss, critic_loss = get_loss(values, returns, attack_probs, release_probs)
  
     #Find gradients
-    actor_grads = ActorTape.gradient(actor_loss, model.actor.trainable_variables)
-    critic_grads = CriticTape.gradient(critic_loss, model.critic.trainable_variables)
+    actor_grads = ActorTape.gradient(actor_loss, actor.trainable_variables)
+    critic_grads = CriticTape.gradient(critic_loss, critic.trainable_variables)
 
     #Weight updates
-    opt.apply_gradients(zip(actor_grads, model.actor.trainable_variables))
-    opt.apply_gradients(zip(critic_grads, model.critic.trainable_variables))
+    opt.apply_gradients(zip(actor_grads, actor.trainable_variables))
+    opt.apply_gradients(zip(critic_grads, critic.trainable_variables))
     
     total_reward = tf.math.reduce_sum(tf.abs(rewards)) #Compute total reward
     total_loss = tf.reduce_sum(tf.abs(actor_loss)) + tf.reduce_sum(tf.abs(critic_loss)) #Compute total loss
