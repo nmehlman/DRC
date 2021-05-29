@@ -14,8 +14,13 @@ import pickle
 from pg_model import predict_times
 from audio import saveAudio
 from hist_cost import get_histogram_cost
+from scipy.signal import hilbert
+from compressor import process_frame, convert_times
 
 '''Main functions for Policy Gradient implementation'''
+
+def hilbert_transform(X):
+    return hilbert(X).astype('float32')
 
 def expected_returns(rewards, gamma, standardize=True):
     
@@ -215,7 +220,7 @@ def make_scalar(input_file_path, pickle_path):
     scalar.fit(states)
     pickle.dump(scalar, open(pickle_path,'wb'))
 
-def run_episode_tf(actor, critic, audio, comp, feature):
+def run_episode_tf(actor, critic, audio, thr, ratio):
     
     '''Runs training episode for a given input audio file.'''
 
@@ -231,46 +236,49 @@ def run_episode_tf(actor, critic, audio, comp, feature):
     attack_times = tf.TensorArray(dtype='float32', size=0, dynamic_size=True, name='attack_times')
     release_times = tf.TensorArray(dtype='float32', size=0, dynamic_size=True, name='release_times')
 
-    done = tf.constant(0, dtype='int16')
-    done_shape = done.shape
-    
-    state = tf.constant(np.zeros(state_len), dtype='float32')
-    state_shape = state.shape
-    
-    active = tf.constant(0, dtype='int16')
-    active_shape = active.shape
-    
-    accuracy_cost = tf.constant(0.0, dtype='float32')
-    accuracy_cost_shape = accuracy_cost.shape
+    t = tf.Variable(0) #Counter for buffer writes
+    idx = tf.Variable(0) #For audio buffer
 
-    t = tf.constant(0) #Counter for buffer writes
+    tau_a = tf.Variable(1.0, dtype='float32') #Attack time constant
+    tau_r = tf.Variable(1.0, dtype='float32') #Release time constant
+    last_gain = tf.Variable(0.0, dtype='float32') #Tracks compressor gain reduction
+    compVar_shape = last_gain.shape #For shape correction
 
     # MAIN EPISODE LOOP #
-    while done == 0: 
+    while idx < (tf.shape(audio)[0] - frame_len): 
 
-        input_frame, lookahead_frame, done = audio.next_frame_tf() #Get next frames
-        done.set_shape(done_shape) #Correct shape
-        lookahead_state, _ = feature.update_tf(lookahead_frame) #Get state via Hilbert Transform
-        comp_state = tf.squeeze(comp.get_state_tf())
+        #Get audio frames
+        input_frame = audio[idx : idx + frame_len]
+        lookahead_frame = audio[idx : idx + frame_len*lookahead_frames]
 
-        attack, release, attack_prob, release_prob, value = predict_times(comp_state, lookahead_state, actor, critic) #Predict using model
-        comp.set_times_tf(attack, release) #Set compressor
+        lookahead_state = tf.numpy_function( hilbert, [lookahead_frame], ['float32'] )
+        comp_state = tf.stack([tau_a, tau_r, last_gain], axis=0)
         
-        output_frame, accuracy_cost, active = comp.process_frame_tf(input_frame, False) #Pass through compressor
-        accuracy_cost.set_shape(accuracy_cost_shape) #Correct shape
-        active.set_shape(active_shape) #Correct shape
-                    
+        attack, release, attack_prob, release_prob, value = predict_times(comp_state, lookahead_state, actor, critic) #Predict using model
+        tau_a, tau_r = tf.numpy_function(convert_times, [attack, release], ['float32', 'float32']) #Set time constants
+        
+        tau_a.set_shape(compVar_shape)
+        tau_r.set_shape(compVar_shape)
+
+        output_frame, accuracy_cost, active, last_gain = tf.numpy_function(process_frame, [input_frame, thr, tau_a, tau_r, ratio, last_gain], ['float32', 'float32', 'int16', 'float32'])
+
+        last_gain.set_shape(compVar_shape)            
+        
         #Buffer Updates
         accuracy_costs = accuracy_costs.write(t, accuracy_cost)
         histogram_costs = histogram_costs.write(t, get_histogram_cost(input_frame, output_frame) )
-        actives = actives.write(t, active)
+        actives = actives.write(t, tf.squeeze(active))
         values = values.write(t, tf.squeeze(value)) 
         attack_probs = attack_probs.write(t, attack_prob)
         release_probs = release_probs.write(t, release_prob)
         attack_times = attack_times.write(t, attack)
         release_times = release_times.write(t, release)
             
-        t = t+1
+        t.assign_add(1)
+        idx.assign_add(frame_len)
+
+        if idx >= tf.shape(audio)[0] - frame_len: #End of audio file
+            break
     
     # END OF MAIN EPISODE LOOP #    
 
@@ -278,6 +286,7 @@ def run_episode_tf(actor, critic, audio, comp, feature):
     rewards =  get_total_reward(histogram_costs.stack(), accuracy_costs.stack(), cost_weights) #Histogram cost
 
     actives = actives.stack()
+    tf.debugging.assert_rank(actives, 1)
     rewards = tf.squeeze(rewards)
     values = tf.squeeze(values.stack())
     attack_probs = tf.squeeze(attack_probs.stack())
@@ -286,7 +295,7 @@ def run_episode_tf(actor, critic, audio, comp, feature):
     return tf.boolean_mask(rewards, actives), tf.boolean_mask(values, actives), tf.boolean_mask(attack_probs, actives), tf.boolean_mask(release_probs, actives), [histogram_costs.stack(), accuracy_costs.stack(), attack_times.stack(), release_times.stack()]
 
 @tf.function
-def train_step_tf(actor, critic, audio, comp, feature, opt, gamma):
+def train_step_tf(actor, critic, audio, thr, ratio, opt, gamma):
 
     '''Completes one training step for Policy Gradient model.
     \nmodel -> model to train
@@ -301,7 +310,7 @@ def train_step_tf(actor, critic, audio, comp, feature, opt, gamma):
         ActorTape.watch(actor.trainable_variables)
         CriticTape.watch(critic.trainable_variables)
         
-        rewards, values, attack_probs, release_probs, plot_data = run_episode_tf(actor, critic, audio, comp, feature)
+        rewards, values, attack_probs, release_probs, plot_data = run_episode_tf(actor, critic, audio, thr, ratio)
         returns = expected_returns(rewards, gamma)
         actor_loss, critic_loss = get_loss(values, returns, attack_probs, release_probs)
  

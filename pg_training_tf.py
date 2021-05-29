@@ -4,6 +4,7 @@ from pg_model import*
 from os import mkdir
 from beepy import beep
 import matplotlib.pyplot as plt
+from audio import loadAudio
 import os
 from utils import directory_init, loss_reward_plot, make_plots
 from utility import time_str
@@ -59,18 +60,14 @@ try:
     for epoch in range(epochs):
         
         start = perf_counter()
-        audio = AudioBuffer(read_path, frame_len, lookahead_frames) #Buffer to read/write audio
-        comp = Compressor(thr, ratio) #Compressor
-        feature = EnvelopeFinder(history_frames, lookahead_frames, 
-        frame_len, history_neurons, lookahead_neurons, Fs, scalar_path) #Envelope finder to extract features
-
+        audio = tf.constant( loadAudio(read_path)[0], dtype='float32')
         #writer = tf.summary.create_file_writer(logdir)
         #tf.summary.trace_on(graph=True, profiler=True)
-        episode_reward, episode_loss, plot_data = train_step_tf(actor, critic, audio, comp, feature, opt, gamma) #Run one training step
+        episode_reward, episode_loss, plot_data = train_step_tf(actor, critic, audio, thr, ratio, opt, gamma) #Run one training step
         #with writer.as_default():
             #tf.summary.trace_export(name="my_func_trace", step=0, profiler_outdir=logdir)
 
-        make_plots(comp, time_plot_path, cost_path, gr_path, epoch, *plot_data)
+        #make_plots(comp, time_plot_path, cost_path, gr_path, epoch, *plot_data)
         episode_reward = episode_reward * reward_scaling[read_path] #Normalize reward
         episode_loss = episode_loss * loss_scaling[read_path] #Normalize loss
         reward_history.append(episode_reward)

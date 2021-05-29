@@ -128,3 +128,52 @@ class Compressor:
     
     def get_state(self):
         return np.array([self.tau_a, self.tau_r, self.last_gain], dtype='float32')
+
+def process_frame(x, threshold, tau_a, tau_r, ratio, last_gain):
+
+    x_raw = np.copy(x)
+    x_dB = np.array([20 * np.log10( abs(n) + .000000001 ) for n in list(x) ]) #Convert frame to dB
+    x_sc = np.array([ n if n < threshold else threshold + (n - threshold)/float(ratio) for n in x_dB ]) #Gain target
+    gc = x_sc - x_dB #Gain
+
+    if sum(abs(gc)) > 0: #Check if compressor is active
+        active = 1
+    else:
+        active = 0
+    
+    #Gain smoothing:
+    gs = np.zeros(len(gc))
+
+    if gc[0] <= last_gain: #First sample
+        gs[0] = tau_a * last_gain + (1-tau_a)*gc[0]
+    else:
+        gs[0] = tau_r * last_gain + (1-tau_r)*gc[0]
+
+    for n in range(1,len(gs)):
+        if gc[n] <= gs[n-1]: 
+            gs[n] = tau_a * gs[n-1] + (1-tau_a)*gc[n]
+
+    else:
+        gs[n] = tau_r * gs[n-1] + (1-tau_r)*gc[n]
+            
+    #Linearize gain, and apply to input:
+    g_lin = np.array( [10.0**(float(x)/20) for x in gs] )
+    y = np.multiply(x_raw, g_lin)
+
+    accuracy_cost = np.sum( np.abs(gc - gs) ) / len(x) #Penalizes slow convergence
+        
+    return np.array(y, dtype='float32'), accuracy_cost, active, gs[-1]
+    #return np.array(y, dtype='float32'), np.array(accuracy_cost, dtype='float32'), np.array(active, dtype='int16'), np.array(gs[-1], dtype='float32')
+
+def convert_times(attack, release, Fs=44100):
+
+    if attack < 1: attack = 1
+    if release < 1: release = 1
+
+    if attack > 1000: attack = 1000
+    if release > 10000: release = 10000
+
+    tau_a = np.exp( -np.log(9)/(Fs * attack/1000.0) )
+    tau_r = np.exp( -np.log(9)/(Fs * release/1000.0) )
+
+    return np.array(tau_a, 'float32'), np.array(tau_r, 'float32')
