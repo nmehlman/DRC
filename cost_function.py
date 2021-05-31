@@ -44,6 +44,7 @@ def get_total_reward( rate_costs, accuracy_costs, weights ):
     cost = tf.math.add(rate_costs, weights[1]*accuracy_costs)
     reward = (1/(cost+.01))
     reward = tf.cast(reward, 'float32')
+  
     return reward
 
 def get_total_reward_tf( rate_costs, accuracy_costs, weights ):

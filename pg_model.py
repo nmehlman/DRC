@@ -218,16 +218,16 @@ def build_actor_critic(history_neurons, lookahead_neurons):
     actor = Model(inputs=[i1,i2], outputs=[x1,x2])
 
     ## CRITIC (VALUE) NETWORK ##
-    x = Conv1D(64, 4, activation='relu')(x)
-    x = MaxPool1D()(x)
-    x = Conv1D(16, 4, activation='relu')(x)
-    x = MaxPool1D()(x)
-    x = Flatten()(x)
-    x = Dense(64)(x)
-    x = Dense(64)(x)
-    x = Dense(1, activation='relu')(x)
+    x3 = Conv1D(64, 4, activation='relu')(x)
+    x3 = MaxPool1D()(x3)
+    x3 = Conv1D(16, 4, activation='relu')(x3)
+    x3 = MaxPool1D()(x3)
+    x3 = Flatten()(x3)
+    x3 = Dense(64)(x3)
+    x3 = Dense(64)(x3)
+    x3 = Dense(1, activation='relu')(x3)
 
-    critic = Model(inputs=[i1,i2], outputs=x)
+    critic = Model(inputs=[i1,i2], outputs=x3)
 
     return actor, critic
 
@@ -249,4 +249,4 @@ def predict_times(history, lookahead, actor, critic):
     attack = idx_to_time_tf(attack_idx, attack_max) #Convert to ms
     release = idx_to_time_tf(release_idx, release_max) #Convert to ms
 
-    return tf.cast(attack, 'float32'), tf.cast(release, 'float32'), tf.cast(attack_prob, 'float32'), tf.cast(release_prob, 'float32'), tf.cast(value, 'float32')
+    return attack, release, attack_prob, release_prob, value

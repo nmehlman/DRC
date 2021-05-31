@@ -39,6 +39,7 @@ else:
 #model.load('Logs/Wed Mar 24 13_40_04/Checkpoints') #Load saved model
 
 actor, critic = build_actor_critic(history_neurons, lookahead_neurons)
+audio = tf.constant( loadAudio(read_path, makemono=True)[0], dtype='float32')
 
 opt = tf.keras.optimizers.Adam(learning_rate=lr)
 
@@ -60,7 +61,6 @@ try:
     for epoch in range(epochs):
         
         start = perf_counter()
-        audio = tf.constant( loadAudio(read_path)[0], dtype='float32')
         #writer = tf.summary.create_file_writer(logdir)
         #tf.summary.trace_on(graph=True, profiler=True)
         episode_reward, episode_loss, plot_data = train_step_tf(actor, critic, audio, thr, ratio, opt, gamma) #Run one training step
@@ -76,7 +76,7 @@ try:
         loss_reward_plot(loss_history, reward_history, t_str)
         end = perf_counter()
         print("Epoch {} completed: Time {:.2f} s ........... Reward: {:.4f} ........... Loss: {:.2f}".format(epoch+1, end-start, episode_reward, episode_loss))
-
+        sys.exit()
     beep(1)
 
 except Exception as E:
