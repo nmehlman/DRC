@@ -91,9 +91,19 @@ def attack_release_plot(attack_times, release_times, save_path=None):
 
     plt.close()
 
+def gr_plot(gain_reduction, save_path):
+    t = np.arange(0,len(gain_reduction))/Fs
+    plt.plot(t,gain_reduction)
+    plt.xlabel("Time (s)")
+    plt.ylabel("Gain Reduction (dB)")
+    plt.title("Gain Reduction History")
+    plt.savefig(save_path)
+    plt.close()
+
 def make_plots(time_plot_path, cost_path, gr_path, epoch_number, 
-histogram_costs, accuracy_costs, attack_times, release_times):
+histogram_costs, accuracy_costs, attack_times, release_times, gain_reduction):
 
     cost_plot(histogram_costs, accuracy_costs, #Costs
     cost_path + "/epoch_{}".format(epoch_number+1))
     attack_release_plot(attack_times, release_times, time_plot_path + "/epoch_{}".format(epoch_number+1)) #Attack and release times
+    gr_plot(gain_reduction, gr_path + "/epoch_{}".format(epoch_number+1))

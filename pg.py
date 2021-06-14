@@ -257,6 +257,7 @@ def run_episode_tf(actor, critic, audio, thr, ratio):
     #TensorArrays for plotting
     attack_times = tf.TensorArray(dtype='float32', size=0, dynamic_size=True, name='attack_times')
     release_times = tf.TensorArray(dtype='float32', size=0, dynamic_size=True, name='release_times')
+    gain_reduction = tf.TensorArray(dtype='float32', size=0, dynamic_size=True, name='gain_reduction')
 
     t = tf.constant(0) #Counter for buffer writes
     idx = tf.constant(0) #For audio buffer
@@ -276,6 +277,7 @@ def run_episode_tf(actor, critic, audio, thr, ratio):
         input_frame = audio[idx : idx + frame_len]
         lookahead_frame = audio[idx : idx + frame_len*lookahead_frames]
 
+        #Determine state
         lookahead_state = tf.squeeze(tf.numpy_function( hilbert_transform, [lookahead_frame], ['float32'] ))
         comp_state = tf.stack([tf.squeeze(tau_a), tf.squeeze(tau_r), last_gain], axis=0)
 
@@ -285,11 +287,12 @@ def run_episode_tf(actor, critic, audio, thr, ratio):
         tau_r.set_shape(tr_shape)
 
         output_frame, accuracy_cost, active, last_gain = tf.numpy_function(process_frame, 
-        [input_frame, thr, tau_a, tau_r, ratio, last_gain], ['float32', 'float32', 'int16', 'float32'])
+        [input_frame, thr, tau_a, tau_r, ratio, last_gain], ['float32', 'float32', 'int16', 'float32']) #Apply compression
         last_gain.set_shape(lg_shape) 
 
 
         #Buffer Updates
+        gain_reduction = gain_reduction.write(t, last_gain)
         accuracy_costs = accuracy_costs.write(t, accuracy_cost)
         histogram_costs = histogram_costs.write(t, get_histogram_cost(input_frame, output_frame) )
         actives = actives.write(t, active)
@@ -307,7 +310,7 @@ def run_episode_tf(actor, critic, audio, thr, ratio):
     #Compute raw reward values
     rewards =  get_total_cost(histogram_costs.stack(), accuracy_costs.stack(), cost_weights) #Histogram cost
 
-    return rewards, values.stack(), attack_probs.stack(), release_probs.stack(), actives.stack(), [histogram_costs.stack(), accuracy_costs.stack(), attack_times.stack(), release_times.stack()]
+    return rewards, values.stack(), attack_probs.stack(), release_probs.stack(), actives.stack(), [histogram_costs.stack(), accuracy_costs.stack(), attack_times.stack(), release_times.stack(), gain_reduction.stack()]
 
 @tf.function
 def train_step_tf(actor, critic, audio, thr, ratio, opt, gamma):
