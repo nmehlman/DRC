@@ -28,15 +28,12 @@ save_path, time_plot_path, write_path, cost_path, gr_path, log_dir = directory_i
 copyfile('global_vars.py', log_dir + '/Parameters_PG') #Log parameter settings
 train_dir = '../Training Sets/RL Tracks/*.wav' #Directory of training files
 train_files = glob(train_dir) #Collect all file names
-read_path = '../Training Sets/RL Tracks/rl4.wav' #Use specific training file
+read_path = '../Training Sets/RL Tracks/rl3.wav' #Use specific training file
 
 if compState: #Select scalar
         scalar_path = 'scalar_pickle_comp'
 else:
     scalar_path = 'scalar_pickle'
-
-#model = PGModel(history_neurons, lookahead_neurons) #Build new model
-#model.load('Logs/Wed Mar 24 13_40_04/Checkpoints') #Load saved model
 
 actor, critic = build_actor_critic(history_neurons, lookahead_neurons)
 audio = tf.constant( loadAudio(read_path, makemono=True)[0], dtype='float32')
@@ -61,13 +58,17 @@ try:
     for epoch in range(epochs):
         
         start = perf_counter()
-        #writer = tf.summary.create_file_writer(logdir)
-        #tf.summary.trace_on(graph=True, profiler=True)
-        episode_reward, episode_loss, plot_data = train_step_tf(actor, critic, audio, thr, ratio, opt, gamma) #Run one training step
-        #with writer.as_default():
-            #tf.summary.trace_export(name="my_func_trace", step=0, profiler_outdir=logdir)
+        if epoch==0:
+            writer = tf.summary.create_file_writer(logdir)
+            tf.summary.trace_on(graph=True, profiler=True)
 
-        #make_plots(comp, time_plot_path, cost_path, gr_path, epoch, *plot_data)
+        episode_reward, episode_loss, plot_data = train_step_tf(actor, critic, audio, thr, ratio, opt, gamma) #Run one training step
+        
+        if epoch==0:
+            with writer.as_default():
+                tf.summary.trace_export(name="my_func_trace", step=0, profiler_outdir=logdir)
+
+        make_plots(time_plot_path, cost_path, gr_path, epoch, *plot_data)
         episode_reward = episode_reward * reward_scaling[read_path] #Normalize reward
         episode_loss = episode_loss * loss_scaling[read_path] #Normalize loss
         reward_history.append(episode_reward)
@@ -76,7 +77,7 @@ try:
         loss_reward_plot(loss_history, reward_history, t_str)
         end = perf_counter()
         print("Epoch {} completed: Time {:.2f} s ........... Reward: {:.4f} ........... Loss: {:.2f}".format(epoch+1, end-start, episode_reward, episode_loss))
-        sys.exit()
+       
     beep(1)
 
 except Exception as E:

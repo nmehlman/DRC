@@ -91,12 +91,9 @@ def attack_release_plot(attack_times, release_times, save_path=None):
 
     plt.close()
 
-def make_plots(comp, time_plot_path, cost_path, gr_path, epoch_number, 
+def make_plots(time_plot_path, cost_path, gr_path, epoch_number, 
 histogram_costs, accuracy_costs, attack_times, release_times):
-
-    comp.plot_gain_history(gr_path + "/epoch_{}".format(epoch_number)) #Gain reduction
 
     cost_plot(histogram_costs, accuracy_costs, #Costs
     cost_path + "/epoch_{}".format(epoch_number+1))
-
     attack_release_plot(attack_times, release_times, time_plot_path + "/epoch_{}".format(epoch_number+1)) #Attack and release times

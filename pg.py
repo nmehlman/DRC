@@ -19,6 +19,23 @@ from compressor import process_frame, convert_times
 
 '''Main functions for Policy Gradient implementation'''
 
+def filter(rewards, values, attack_probs, release_probs, actives):
+    attack_probs_filtered = tf.TensorArray(dtype='float32', size=0, dynamic_size=True) 
+    release_probs_filtered = tf.TensorArray(dtype='float32', size=0, dynamic_size=True) 
+    values_filtered = tf.TensorArray(dtype='float32', size=0, dynamic_size=True)
+    rewards_filtered = tf.TensorArray(dtype='float32', size=0, dynamic_size=True)
+    idx = 0
+    
+    for t in tf.range(tf.shape(actives)[0]):
+        if actives[t] == 1:
+            attack_probs_filtered = attack_probs_filtered.write(idx, attack_probs[t])
+            release_probs_filtered = release_probs_filtered.write(idx, release_probs[t]) 
+            values_filtered = values_filtered.write(idx, values[t]) 
+            rewards_filtered = rewards_filtered.write(idx, rewards[t])
+            idx = idx + 1
+    
+    return rewards_filtered.stack(), values_filtered.stack(), attack_probs_filtered.stack(), release_probs_filtered.stack()
+
 def hilbert_transform(X):
     env = abs(hilbert( X ))
     env_smoothed = resample(env,lookahead_neurons)
@@ -63,7 +80,7 @@ def get_actor_loss(values, returns, attack_probs, release_probs):
     log_release_probs = tf.math.log(release_probs)
     advantage = returns - values
 
-    loss = -tf.math.reduce_sum( (log_attack_probs + log_release_probs) * advantage)
+    loss = tf.math.reduce_sum( (log_attack_probs + log_release_probs) * advantage)
 
     return loss
 
@@ -73,8 +90,8 @@ def get_critic_loss(values, returns):
     \nvalues -> predicted V(s) from critic for each time step
     \nreturns -> discounted returns at each time step'''
     
-    loss_fcn = tf.keras.losses.MSE
-    #loss_fcn = tf.keras.losses.Huber(reduction=tf.keras.losses.Reduction.SUM)
+    #loss_fcn = tf.keras.losses.MSE
+    loss_fcn = tf.keras.losses.Huber(reduction=tf.keras.losses.Reduction.SUM)
 
     return loss_fcn(values, returns)
 
@@ -235,7 +252,7 @@ def run_episode_tf(actor, critic, audio, thr, ratio):
     values = tf.TensorArray(dtype='float32', size=0, dynamic_size=True, name='values') #Critic prediction of state value
     accuracy_costs = tf.TensorArray(dtype='float32', size=0, dynamic_size=True, name='accuracy_costs') #Accuracy cost values 
     histogram_costs = tf.TensorArray(dtype='float32', size=0, dynamic_size=True, name='histogram_costs') #Histogram (i.e. rate) cost values
-    actives = tf.TensorArray(dtype='int16', size=0, dynamic_size=True, name='actives') #Only include frames where compressor is active
+    actives = tf.TensorArray(dtype='int16', size=0, dynamic_size=True, name='actives', element_shape=(None)) #Only include frames where compressor is active
 
     #TensorArrays for plotting
     attack_times = tf.TensorArray(dtype='float32', size=0, dynamic_size=True, name='attack_times')
@@ -275,7 +292,7 @@ def run_episode_tf(actor, critic, audio, thr, ratio):
         #Buffer Updates
         accuracy_costs = accuracy_costs.write(t, accuracy_cost)
         histogram_costs = histogram_costs.write(t, get_histogram_cost(input_frame, output_frame) )
-        actives = actives.write(t, tf.squeeze(active))
+        actives = actives.write(t, active)
         values = values.write(t, tf.squeeze(value)) 
         attack_probs = attack_probs.write(t, attack_prob)
         release_probs = release_probs.write(t, release_prob)
@@ -284,22 +301,13 @@ def run_episode_tf(actor, critic, audio, thr, ratio):
 
         t = t+1
         idx = idx+frame_len
-    
+
     # END OF MAIN EPISODE LOOP #    
 
     #Compute raw reward values
-    rewards =  get_total_reward(histogram_costs.stack(), accuracy_costs.stack(), cost_weights) #Histogram cost
+    rewards =  get_total_cost(histogram_costs.stack(), accuracy_costs.stack(), cost_weights) #Histogram cost
 
-    actives = actives.stack()
-    actives = tf.cast(actives, 'float32')
-    rewards = tf.squeeze(rewards)
-    values = tf.squeeze(values.stack())
-    attack_probs = tf.squeeze(attack_probs.stack())
-    release_probs = tf.squeeze(release_probs.stack())
-
-    #return tf.boolean_mask(rewards, actives), tf.boolean_mask(values, actives), tf.boolean_mask(attack_probs, actives), tf.boolean_mask(release_probs, actives), [histogram_costs.stack(), accuracy_costs.stack(), attack_times.stack(), release_times.stack()]
-    return rewards*actives, values*actives, attack_probs*actives, release_probs*actives, [histogram_costs.stack(), accuracy_costs.stack(), attack_times.stack(), release_times.stack()]
-
+    return rewards, values.stack(), attack_probs.stack(), release_probs.stack(), actives.stack(), [histogram_costs.stack(), accuracy_costs.stack(), attack_times.stack(), release_times.stack()]
 
 @tf.function
 def train_step_tf(actor, critic, audio, thr, ratio, opt, gamma):
@@ -317,7 +325,8 @@ def train_step_tf(actor, critic, audio, thr, ratio, opt, gamma):
         ActorTape.watch(actor.trainable_variables)
         CriticTape.watch(critic.trainable_variables)
         
-        rewards, values, attack_probs, release_probs, plot_data = run_episode_tf(actor, critic, audio, thr, ratio)
+        rewards, values, attack_probs, release_probs, actives, plot_data = run_episode_tf(actor, critic, audio, thr, ratio)
+        rewards, values, attack_probs, release_probs = filter(rewards, values, attack_probs, release_probs, actives)
         returns = expected_returns(rewards, gamma)
         actor_loss, critic_loss = get_loss(values, returns, attack_probs, release_probs)
     

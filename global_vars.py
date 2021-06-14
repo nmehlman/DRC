@@ -13,8 +13,7 @@ epsilon = .1 #For Epsilon Greedy
 cost_weights = tf.constant([1, 1], dtype='float32') #[rate, accuracy]
 cost_weights = tf.math.l2_normalize(cost_weights) #Normalize weights
 eps = np.finfo(np.float32).eps.item() #Small number to avoid division by zero
-gamma = .99 #Cost discounting
-replay_samples = 500 #Number of replay buffer samples
+gamma = .5 #Cost discounting
 Fs = 44100 #Sample rate (Hz)
 frame_len = 11025 #Samples per frame
 

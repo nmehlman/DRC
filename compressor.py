@@ -162,8 +162,7 @@ def process_frame(x, threshold, tau_a, tau_r, ratio, last_gain):
 
     accuracy_cost = np.sum( np.abs(gc - gs) ) / len(x) #Penalizes slow convergence
         
-    return np.array(y, dtype='float32'), np.array(accuracy_cost, dtype='float32'), np.array(active, dtype='int16'), np.array(gs[-1], dtype='float32')
-    #return np.array(y, dtype='float32'), np.array(accuracy_cost, dtype='float32'), np.array(active, dtype='int16'), np.array(gs[-1], dtype='float32')
+    return np.array(y, dtype='float32'), np.float32(accuracy_cost), np.int16(active), np.float32(gs[-1])
 
 def convert_times(attack, release, Fs=44100):
 
